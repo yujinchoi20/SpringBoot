@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Board Write'</title>
+    <title>Board Write</title>
 </head>
 
 <style>
@@ -19,10 +19,14 @@
         margin-top: 10px;
         min-height: 100px;
     }
+    .layout button {
+        margin-top: 10px;
+    }
 </style>
 
 <body>
   <div class="layout">
+      <h2>글 작성 페이지</h2>
       <form action="/board/writePro" method="post" enctype="multipart/form-data">
           <input type="text" name="title"/>
           <textarea name="content"></textarea>
