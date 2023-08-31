@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Board Form</title>
+    <title>Board Write'</title>
 </head>
 
 <style>
@@ -23,9 +23,10 @@
 
 <body>
   <div class="layout">
-      <form action="/board/writePro" method="post">
+      <form action="/board/writePro" method="post" enctype="multipart/form-data">
           <input type="text" name="title"/>
           <textarea name="content"></textarea>
+          <input type="file" name="file">
           <button type="submit">작성</button>
       </form>
   </div>

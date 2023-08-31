@@ -18,4 +18,10 @@ public class Board {
 
     private String title;
     private String Content;
+
+    @Column(length = 150)
+    private String fileName;
+
+    @Column(length = 300)
+    private String filePath;
 }
