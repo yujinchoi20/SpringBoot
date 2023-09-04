@@ -22,10 +22,18 @@ public class MemberController {
     }
 
     @PostMapping("/member/joinPro")
-    public String memberJoinPro(Member member) {
-        memberService.memberJoin(member);
+    public String memberJoinPro(Member member, Model model) {
+        Long id = memberService.memberJoin(member);
 
-        return "";
+        if(id != 0L) {
+            model.addAttribute("message", "회원 가입 완료!");
+            model.addAttribute("searchUrl", "/member/login");
+        } else {
+            model.addAttribute("message", "이미 존재하는 회원입니다.");
+            model.addAttribute("searchUrl", "/member/join");
+        }
+
+        return "message";
     }
 
     @GetMapping("/member/login")
@@ -37,12 +45,14 @@ public class MemberController {
     public String memberLoginPro(Member member, Model model) {
         String userId = member.getUserId();
         String password = member.getPassword();
+        String username = "";
         Boolean loginCheck = false;
 
         List<Member> members = memberService.memberLogin();
         for(Member m : members) {
             if(m.getUserId().equals(userId) && m.getPassword().equals(password)) {
                 loginCheck = true;
+                username = m.getUsername();
             }
         }
 
@@ -53,6 +63,13 @@ public class MemberController {
             model.addAttribute("message", "로그인 실패..");
             model.addAttribute("searchUrl", "/member/login");
         }
+
         return "message";
+    }
+
+    @GetMapping("/member/home")
+    public String memberHome() {
+
+        return "memberHome";
     }
 }

@@ -2,26 +2,45 @@ package com.example.member.Service;
 
 import com.example.member.Entity.Member;
 import com.example.member.Repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class MemberService {
 
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     //회원 가입
-    public void memberJoin(Member member){
-        memberRepository.save(member);
+    @Transactional
+    public Long memberJoin(Member member) {
+        if(validateDuplicateMember(member)) {
+            memberRepository.save(member);
+            return member.getId();
+        } else {
+            return 0L;
+        }
+    }
+
+    //중복 회원 확인
+    private boolean validateDuplicateMember(Member member) {
+        List<Member> findMembers = memberRepository.findByName(member.getUsername());
+
+        if(!findMembers.isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 
     //로그인
     public List<Member> memberLogin() {
+
         return memberRepository.findAll();
     }
-
 }
