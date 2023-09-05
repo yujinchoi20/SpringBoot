@@ -37,19 +37,9 @@ public class MemberService {
         return true;
     }
 
-    //로그인
-    public List<Member> memberLogin() {
+    //회원 아이디로 조회
+    public Member memberFindId(String userId) {
 
-        return memberRepository.findAll();
-    }
-
-    //전체 회원 조회
-    public List<Member> memberList() {
-        return memberRepository.findAll();
-    }
-
-    //회원 조회
-    public Member memberFind(Long id) {
-        return memberRepository.findOne(id);
+        return memberRepository.findById(userId);
     }
 }

@@ -2,6 +2,8 @@ package com.example.member.Controller;
 
 import com.example.member.Entity.Member;
 import com.example.member.Service.MemberService;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
 
     @Autowired
@@ -47,44 +50,35 @@ public class MemberController {
     }
 
     @PostMapping("/member/loginPro")
-    public String memberLoginPro(Member member, Model model) {
-        String userId = member.getUserId();
-        String password = member.getPassword();
-        String username = "";
-        Boolean loginCheck = false;
+    public String memberLoginPro(Member member, Model model,
+                                 HttpSession session,
+                                 Boolean remember) {
 
-        List<Member> members = memberService.memberLogin();
-        for(Member m : members) {
-            if(m.getUserId().equals(userId) && m.getPassword().equals(password)) {
-                loginCheck = true;
-                username = m.getUsername();
-            }
-        }
+        //유지 여부에 따라, 세션 만료 기간 설정하기
+        System.out.println("로그인 유지 여부: " + remember);
 
-        if(loginCheck) {
-            model.addAttribute("message", username + "님 로그인 완료!");
-            model.addAttribute("searchUrl", "/member/home");
+        Member loginMember = memberService.memberFindId(member.getUserId());
+        if(loginMember.getUserId().equals(member.getUserId()) &&
+            loginMember.getPassword().equals(member.getPassword())) {
+            //세션 확인
+            session.setAttribute("loginUserId", member.getUserId());
+
+            return "memberHome";
         } else {
-            if(userId.equals("")) {
-                model.addAttribute("message", "아이디를 입력해 주세요.");
-                model.addAttribute("searchUrl", "/member/login");
-                return "message";
-            } else if(password.equals("")) {
-                model.addAttribute("message", "비밀번호를 입력해 주세요.");
-                model.addAttribute("searchUrl", "/member/login");
-                return "message";
-            }
-
-            model.addAttribute("message", "로그인 실패..");
+            model.addAttribute("message", "아이디 혹은 비밀번호가 잘못되었습니다.");
             model.addAttribute("searchUrl", "/member/login");
-        }
 
-        return "message";
+            return "message";
+        }
     }
 
     @GetMapping("/member/home")
     public String memberHome() {
 
         return "memberHome";
+    }
+
+    public class SessionConst {
+        public static final String LOGIN_MEMBER = "loginMember";
     }
 }
