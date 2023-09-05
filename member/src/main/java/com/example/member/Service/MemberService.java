@@ -3,7 +3,6 @@ package com.example.member.Service;
 import com.example.member.Entity.Member;
 import com.example.member.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,5 +41,15 @@ public class MemberService {
     public List<Member> memberLogin() {
 
         return memberRepository.findAll();
+    }
+
+    //전체 회원 조회
+    public List<Member> memberList() {
+        return memberRepository.findAll();
+    }
+
+    //회원 조회
+    public Member memberFind(Long id) {
+        return memberRepository.findOne(id);
     }
 }

@@ -16,6 +16,11 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    @GetMapping("/")
+    public String login(){
+        return "main";
+    }
+
     @GetMapping("/member/join")
     public String memberJoin(){
         return "memberJoin";
@@ -57,9 +62,19 @@ public class MemberController {
         }
 
         if(loginCheck) {
-            model.addAttribute("message", "로그인 완료!");
+            model.addAttribute("message", username + "님 로그인 완료!");
             model.addAttribute("searchUrl", "/member/home");
         } else {
+            if(userId.equals("")) {
+                model.addAttribute("message", "아이디를 입력해 주세요.");
+                model.addAttribute("searchUrl", "/member/login");
+                return "message";
+            } else if(password.equals("")) {
+                model.addAttribute("message", "비밀번호를 입력해 주세요.");
+                model.addAttribute("searchUrl", "/member/login");
+                return "message";
+            }
+
             model.addAttribute("message", "로그인 실패..");
             model.addAttribute("searchUrl", "/member/login");
         }

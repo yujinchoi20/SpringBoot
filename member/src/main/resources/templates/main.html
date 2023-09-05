@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>메인 화면</title>
 </head>
 <style>
     .layout {
@@ -12,9 +12,9 @@
 </style>
 <body>
 <div class="layout">
-    <form action="/member/home" method="get">
-        <h2>로그인 완료!</h2>
-    </form>
+  <h2>메인 화면</h2>
+  <button th:onclick="|location.href='@{/member/login}'|">로그인</button>
+  <button th:onclick="|location.href='@{/member/join}'|">회원가입</button>
 </div>
 </body>
 </html>
