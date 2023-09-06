@@ -5,6 +5,7 @@ import com.example.member.Service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/")
+    @GetMapping("/member")
     public String login(){
         return "main";
     }
@@ -60,8 +61,18 @@ public class MemberController {
         Member loginMember = memberService.memberFindId(member.getUserId());
         if(loginMember.getUserId().equals(member.getUserId()) &&
             loginMember.getPassword().equals(member.getPassword())) {
-            //세션 확인
+
+            //세션 생성
             session.setAttribute("loginUserId", member.getUserId());
+
+            String sessionUserId = (String)session.getAttribute("loginUserId");
+            boolean loginInfo = sessionUserId == null ? false : true;
+
+            if(loginInfo) {
+                System.out.println("로그인 상태");
+            } else {
+                System.out.println("로그아웃 상태");
+            }
 
             return "memberHome";
         } else {
@@ -78,7 +89,15 @@ public class MemberController {
         return "memberHome";
     }
 
-    public class SessionConst {
-        public static final String LOGIN_MEMBER = "loginMember";
+    @GetMapping("/member/logout")
+    public String memberLogout(HttpSession session, Model model) {
+        session.invalidate();
+
+        model.addAttribute("message", "로그아웃 상태");
+        model.addAttribute("searchUrl", "/member");
+
+        System.out.println("로그아웃 상태");
+
+        return "message";
     }
 }

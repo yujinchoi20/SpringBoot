@@ -2,19 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>메인 화면</title>
+    <title>Page Home</title>
 </head>
 <style>
-    .layout {
-        width: 500px;
-        margin: 0 auto;
-    }
+.main-wrapper {
+    width: 400px;
+    height: 350px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+.main-wrapper > h2 {
+    font-size: 24px;
+    color: #2E64FE;
+    margin-bottom: 20px;
+}
+.main-wrapper > button {
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+button:hover {
+    background-color: #D8D8D8;
+}
 </style>
 <body>
-<div class="layout">
-  <h2>메인 화면</h2>
-  <button th:onclick="|location.href='@{/member/login}'|">로그인</button>
-  <button th:onclick="|location.href='@{/member/join}'|">회원가입</button>
+<div class="main-wrapper">
+  <h2>Page Home</h2>
+    <button th:onclick="|location.href='@{/member/login}'|">Login</button>
+    <button th:onclick="|location.href='@{/member/join}'|">Join</button>
 </div>
 </body>
 </html>
