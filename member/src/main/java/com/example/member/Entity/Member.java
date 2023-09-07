@@ -1,12 +1,12 @@
 package com.example.member.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -27,4 +27,8 @@ public class Member {
     @NotNull
     @NotBlank(message = "이름을 입력해 주세요.")
     private String username;
+
+    //Board 엔티티와 일대다 연관관계
+    @OneToMany(mappedBy = "member")
+    private List<Board> boardList = new ArrayList<>();
 }

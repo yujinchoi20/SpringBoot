@@ -2,10 +2,16 @@ package com.example.member.Controller;
 
 import com.example.member.Entity.Member;
 import com.example.member.Service.MemberService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +21,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     @Autowired
@@ -53,6 +60,7 @@ public class MemberController {
     @PostMapping("/member/loginPro")
     public String memberLoginPro(Member member, Model model,
                                  HttpSession session,
+                                 HttpServletResponse response,
                                  Boolean remember) {
 
         //유지 여부에 따라, 세션 만료 기간 설정하기
@@ -62,9 +70,19 @@ public class MemberController {
         if(loginMember.getUserId().equals(member.getUserId()) &&
             loginMember.getPassword().equals(member.getPassword())) {
 
+            //로그인 유지를 원할 경우 쿠키 생성
+            if(remember != null) {
+                Cookie cookie = new Cookie("userId", member.getUserId());
+                cookie.setMaxAge(60*60*24); //쿠키 유지 시간: 1일
+                cookie.setPath("/");
+
+                response.addCookie(cookie);
+            }
+
             //세션 생성
             session.setAttribute("loginUserId", member.getUserId());
 
+            //로그인 상태 체크 (필요 없는 부분)
             String sessionUserId = (String)session.getAttribute("loginUserId");
             boolean loginInfo = sessionUserId == null ? false : true;
 
