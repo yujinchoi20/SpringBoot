@@ -21,5 +21,5 @@ public class Board {
     //Member 엔티티와 다대일 연관관계 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member member; //작성자
 }

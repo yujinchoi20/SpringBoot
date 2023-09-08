@@ -92,7 +92,10 @@ public class MemberController {
                 System.out.println("로그아웃 상태");
             }
 
-            return "memberHome";
+            String name = session.getAttribute("loginUserId").toString();
+            model.addAttribute("username", name);
+
+            return "boardWrite";
         } else {
             model.addAttribute("message", "아이디 혹은 비밀번호가 잘못되었습니다.");
             model.addAttribute("searchUrl", "/member/login");
