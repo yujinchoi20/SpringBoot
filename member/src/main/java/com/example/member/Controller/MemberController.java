@@ -112,6 +112,7 @@ public class MemberController {
 
     @GetMapping("/member/logout")
     public String memberLogout(HttpSession session, Model model) {
+        //세션 종료
         session.invalidate();
 
         model.addAttribute("message", "로그아웃 상태");
