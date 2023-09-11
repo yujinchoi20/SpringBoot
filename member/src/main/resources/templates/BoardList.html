@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>글 목록</title>
+</head>
+<style>
+.board-wrapper {
+    width: 400px;
+    height: 350px;
+    padding: 40px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+.board-wrapper > h2{
+    font-size: 24px;
+    color: #2E64FE;
+    margin-bottom: 20px;
+}
+</style>
+<body>
+<div class="board-wrapper">
+    <h2>게시글 목록</h2>
+    <table>
+        <thead>
+        <tr>
+            <th> 글번호 </th>
+            <th> 제목 </th>
+            <th> 작성자 </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${list}">
+            <td th:text="${board.id}"></td>
+            <td>
+                <a th:text="${board.title}"></a>
+            </td>
+            <td th:text="${board.member}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
