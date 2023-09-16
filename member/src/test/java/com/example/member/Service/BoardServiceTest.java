@@ -55,4 +55,27 @@ public class BoardServiceTest {
         //Then
         assertEquals(member.getUsername(), findBoard.getMember().getUsername()); //expected, actual
     }
+
+    @Test
+    public void 글쓴이_조회() throws Exception {
+        //Given
+        Member member = new Member();
+        member.setUserId("1234");
+        member.setPassword("1234");
+        member.setUsername("choi");
+
+        memberService.memberJoin(member); //회원가입
+
+        Board board = new Board();
+        board.setTitle("Test!!");
+        board.setContent("Test ing");
+        board.setMember(member);
+
+        //When
+        boardService.boardWrite(board);
+        Board findBoard = boardService.boardSearch(board.getId());
+
+        //Then
+        assertEquals(findBoard.getMember().getUsername(), member.getUsername());
+    }
 }
