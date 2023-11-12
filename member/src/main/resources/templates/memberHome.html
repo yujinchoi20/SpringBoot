@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Home</title>
 </head>
+<style>
+.home-wrapper {
+    width: 400px;
+    height: 350px;
+    padding: 40px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+.home-wrapper > h2 {
+    font-size: 24px;
+    color: #2E64FE;
+    margin-bottom: 20px;
+}
+.home-wrapper > button {
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+button:hover {
+    background-color: #D8D8D8;
+}
+</style>
 <body>
-$END$
+<div class="home-wrapper">
+    <h2>Board</h2>
+    <form action="/member/home" method="get" id="home-form">
+        <p th:text="${session.loginUserId}"></p>
+    </form>
+
+    <button th:onclick="|location.href='@{/member/logout}'|">로그아웃</button>
+</div>
 </body>
 </html>
