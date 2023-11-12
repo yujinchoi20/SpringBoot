@@ -1,34 +1,11 @@
 package com.example.member.Repository;
 
 import com.example.member.Entity.Board;
-import com.example.member.Entity.Member;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface BoardRepository extends JpaRepository<Board, Long> {
 
-@Repository
-public class BoardRepository {
-
-    @PersistenceContext
-    private EntityManager em;
-
-    //글 작성
-    public void write(Board board) {
-        em.persist(board);
-    }
-
-    //글 목록
-    public List<Board> list(Board board) {
-        return em.createQuery("select b from Board b")
-                .getResultList();
-    }
-
-    //글 조회
-    public Board search(Long id) {
-        return em.createQuery("select b from Board b where b.id=:id", Board.class)
-                .setParameter("id", id)
-                .getSingleResult();
-    }
+    Page<Board> findByTitleContaining(String searchKeyword, Pageable pageable);
 }

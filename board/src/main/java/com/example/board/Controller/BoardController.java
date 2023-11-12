@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @Controller
 public class BoardController {
 
@@ -29,6 +27,7 @@ public class BoardController {
         return "boardWrite";
     }
 
+    //글 작성 완료
     @PostMapping("/board/writePro")
     public String boardWritePro(Board board, Model model, MultipartFile file) throws Exception {
         boardService.boardWrite(board, file);
@@ -39,6 +38,7 @@ public class BoardController {
         return "message";
     }
 
+    //글 목록 + 페이징 처리
     @GetMapping("/board/list")
     public String boardList(Model model,
                             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
@@ -64,12 +64,14 @@ public class BoardController {
         return "boardList";
     }
 
+    //글 상세보기
     @GetMapping("/board/view")
     public String boardView(Model model, Long id) {
         model.addAttribute("board", boardService.boardView(id));
         return "boardView";
     }
 
+    //글 삭제
     @GetMapping("/board/delete")
     public String boardDelete(Long id) {
         boardService.boardDelete(id);
@@ -77,15 +79,22 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    //글 수정
     @GetMapping("/board/modify/{id}")
-    public String boardModify(@PathVariable("id") Long id, Model model) {
+    public String boardModify(@PathVariable("id") Long id,
+                              Model model) {
         model.addAttribute("board", boardService.boardView(id));
 
         return "boardModify";
     }
 
+    //여기서 덮어씌우는 방법이 아닌 변경 감지를 사용! -> 더티체킹
     @PostMapping("/board/update/{id}")
-    public String boardUpdate(@PathVariable("id") Long id, Board board, Model model, MultipartFile file) throws Exception {
+    public String boardUpdate(@PathVariable("id") Long id,
+                              Board board,
+                              Model model,
+                              MultipartFile file) throws Exception {
+
         Board boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());

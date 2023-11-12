@@ -22,10 +22,15 @@
 </style>
 <body>
     <div class="layout">
+        <h2>글 수정 페이지</h2>
         <form th:action="@{/board/update/{id}(id = ${board.id})}" method="post">
             <input name="title" type="text" th:value="${board.title}">
             <textarea name="content" th:text="${board.content}"></textarea>
+            <input type="file" name="file">
             <button type="submit">수정</button>
+        </form>
+        <form action="/board/list" method="get">
+            <button type="submit">글 목록</button>
         </form>
     </div>
 </body>

@@ -18,6 +18,12 @@ public class Board {
     @Column(length = 150)
     private String Content;
 
+    @Column(length = 150)
+    private String fileName;
+
+    @Column(length = 300)
+    private String filePath;
+
     //Member 엔티티와 다대일 연관관계 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
