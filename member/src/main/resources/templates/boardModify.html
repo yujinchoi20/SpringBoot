@@ -5,31 +5,69 @@
   <title>Board Modify</title>
 </head>
 <style>
-    .layout {
-        width : 500px;
-        margin : 0 auto;
-        margin-top : 40px;
-    }
-    .layout input {
-        width : 100%;
-        box-sizing : border-box
-    }
-    .layout textarea {
-        width : 100%;
-        margin-top : 10px;
-        min-height : 300px;
-    }
+.modify-wrapper {
+    width: 400px;
+    height: 350px;
+    padding: 40px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+.modify-wrapper > h2{
+    font-size: 24px;
+    color: #2E64FE;
+    margin-bottom: 20px;
+}
+#modify-form > button[type="submit"] {
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+#modify-form > input::placeholder{
+    color: #D2D2D2;
+}
+#modify-form > input{
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+#modify-form > textarea{
+    width: 100%;
+    height: 144px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+#list-form > button[type="submit"] {
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
 </style>
 <body>
-<div class="layout">
+<div class="modify-wrapper">
   <h2>글 수정 페이지</h2>
-  <form th:action="@{/board/update/{id}(id = ${board.id})}" method="post">
+  <form th:action="@{/member/board/update/{id}(id = ${board.id})}" method="post" id="modify-form">
     <input name="title" type="text" th:value="${board.title}">
     <textarea name="content" th:text="${board.content}"></textarea>
     <input type="file" name="file">
     <button type="submit">수정</button>
   </form>
-  <form action="/board/list" method="get">
+  <form action="/member/board/list" method="get" id="list-form">
     <button type="submit">글 목록</button>
   </form>
 </div>

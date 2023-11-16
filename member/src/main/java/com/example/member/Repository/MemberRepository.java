@@ -22,9 +22,17 @@ public class MemberRepository {
     }
 
     public Member findById(String userId) {
-        return em.createQuery("select m from Member m where m.userId = :userId", Member.class)
-                .setParameter("userId", userId)
-                .getSingleResult();
+        Member result = null;
+
+        try {
+            result = em.createQuery("select m from Member m where m.userId = :userId", Member.class)
+                    .setParameter("userId", userId)
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw new IllegalStateException("회원정보가 잘못되었습니다.");
+        } finally {
+            return result;
+        }
     }
 
     public List<Member> findByName(String username) {

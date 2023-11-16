@@ -16,16 +16,8 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @NotNull
-    @NotBlank(message = "아이디를 입력해 주세요.")
     private String userId;
-
-    @NotNull
-    @NotBlank(message = "비밀번호를 입력해 주세요.")
     private String password;
-
-    @NotNull
-    @NotBlank(message = "이름을 입력해 주세요.")
     private String username;
 
     //Board 엔티티와 일대다 연관관계

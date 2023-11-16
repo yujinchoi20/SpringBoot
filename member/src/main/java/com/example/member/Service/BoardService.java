@@ -36,14 +36,14 @@ public class BoardService {
     }
 
     //글 목록
-    public Page<Board> boardList(Pageable pageable) {
-        return boardRepository.findAll(pageable);
+    public List<Board> boardList() {
+        return boardRepository.findAll();
     }
 
     //페이지 특정 글 검색
-    public Page<Board> boardSearch(String searchKeyword, Pageable pageable) {
-        return boardRepository.findByTitleContaining(searchKeyword, pageable);
-    }
+//    public Page<Board> boardSearch(String searchKeyword, Pageable pageable) {
+//        return boardRepository.findByTitleContaining(searchKeyword, pageable);
+//    }
 
     //글 상세보기
     public Board boardView(Long id) {

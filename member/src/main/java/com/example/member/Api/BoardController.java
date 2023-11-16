@@ -1,4 +1,4 @@
-package com.example.member.Controller;
+package com.example.member.Api;
 
 import com.example.member.Entity.Board;
 import com.example.member.Entity.Member;
@@ -7,7 +7,7 @@ import com.example.member.Service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.PrintWriter;
 import java.util.List;
 
 @Controller
@@ -44,23 +42,23 @@ public class BoardController {
     @PostMapping("/member/board/writePro")
     public String boardWritePro(Board board, Model model,
                                 MultipartFile file,
-                                HttpServletRequest request, HttpServletResponse response) throws Exception {
+                                HttpServletRequest request) throws Exception {
 
         String userId = null;
         Cookie[] cookies = request.getCookies();
+
         for(Cookie cookie : cookies) {
+            log.debug("cookie {}", cookie);
             if(cookie.getName().equals("userId")) {
                 userId = cookie.getValue();
-                response.addCookie(cookie);
                 break;
             }
         }
 
-        Member member = memberService.memberFindId(userId);
-        member.addBoard(board);
+        Member member = memberService.findById(userId);
+        //member.addBoard(board);
+        board.setMember(member);
         boardService.boardWrite(board, file);
-
-        response.sendRedirect("/member/board/list");
 
         try {
             model.addAttribute("message", "글 작성 완료!");
@@ -73,11 +71,12 @@ public class BoardController {
     }
 
     @GetMapping("/member/board/list")
-    public String boardList(Model model, Board board,
-                            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
+    public String boardList(Model model,
+                            @PageableDefault(page = 0, size = 10, sort = "id",
+                                    direction = Sort.Direction.DESC)Pageable pageable,
                             String searchKeyword) {
 
-        Page<Board> list = null;
+        /*Page<Board> list = null;
 
         if(searchKeyword == null) {
             list = boardService.boardList(pageable);
@@ -92,7 +91,10 @@ public class BoardController {
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+        model.addAttribute("endPage", endPage);*/
+
+        List<Board> list = boardService.boardList();
+        model.addAttribute("list", list);
 
         return "boardList";
     }

@@ -77,21 +77,20 @@
 }
 </style>
 <body>
-  <div class="board-wrapper">
+<div class="board-wrapper">
     <h2>Board</h2>
-        <form action="/member/board/writePro" method="post" id="board-form">
-            <h4 th:text="${username}" name="username" style="display:inline">Logout</h4>
-            <h4 style="display:inline">님</h4>
-            <input type="text" name="title" placeholder="Title"/>
-            <textarea name="content" placeholder="Content"></textarea>
-            <input type="submit" value="작성"/>
-        </form>
-        <form action="/member/logout" method="get" id="logout-form">
-            <input type="submit" value="로그아웃">
-        </form>
-        <form action="/member/board/list" method="get" id="list-form">
-            <input type="submit" value="글목록">
-        </form>
-  </div>
+
+    <form action="/member/board/writePro" method="post" id="board-form">
+        <input type="text" name="title" placeholder="Title"/>
+        <textarea name="content" placeholder="Content"></textarea>
+        <input type="submit" value="작성"/>
+    </form>
+    <form action="/member/logout" method="get" id="logout-form">
+        <input type="submit" value="로그아웃">
+    </form>
+    <form action="/member/board/list" method="get" id="list-form">
+        <input type="submit" value="글목록">
+    </form>
+</div>
 </body>
 </html>

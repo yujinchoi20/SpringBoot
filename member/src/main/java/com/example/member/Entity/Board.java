@@ -25,7 +25,7 @@ public class Board {
     private String filePath;
 
     //Member 엔티티와 다대일 연관관계 매핑
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member; //작성자
 }

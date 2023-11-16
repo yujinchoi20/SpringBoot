@@ -17,17 +17,17 @@ public class MemberService {
 
     //회원 가입
     @Transactional
-    public Long memberJoin(Member member) {
+    public Long save(Member member) {
         if(validateDuplicateMember(member)) {
             memberRepository.save(member);
             return member.getId();
         } else {
-            return 0L;
+            throw new IllegalStateException("존재하는 회원입니다.");
         }
     }
 
     //중복 회원 확인
-    private boolean validateDuplicateMember(Member member) {
+    public boolean validateDuplicateMember(Member member) {
         List<Member> findMembers = memberRepository.findByName(member.getUsername());
 
         if(!findMembers.isEmpty()) {
@@ -37,9 +37,17 @@ public class MemberService {
         return true;
     }
 
-    //회원 아이디로 조회
-    public Member memberFindId(String userId) {
+    public Member findOne(Long id) {
+        return memberRepository.findOne(id);
+    }
 
+    //회원 아이디로 조회
+    public Member findById(String userId) {
         return memberRepository.findById(userId);
+    }
+
+    //회원명으로 조회
+    public List<Member> findByName(String username) { //동명이인
+        return memberRepository.findByName(username);
     }
 }

@@ -7,8 +7,9 @@
 <body>
 <h1 th:text="${board.title}">제목입니다.</h1>
 <p th:text="${board.content}">내용이 들어갈 부분입니다.</p>
-<a th:href="@{/board/delete(id=${board.id})}">글 삭제</a>
-<a th:href="@{/board/modify/{id}(id=${board.id})}">글 수정</a>
+<a th:href="@{/member/board/delete(id=${board.id})}">글 삭제</a>
+<a th:href="@{/member/board/modify/{id}(id=${board.id})}">글 수정</a>
 <a th:href="@{${board.filePath}}">이미지 보기</a>
+<a th:href="@{/member/board/list}">글 목록</a>
 </body>
 </html>
