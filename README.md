@@ -9,7 +9,7 @@
 
 ## 개발 과정
 
-#### 1. 엔티티 클래스 구현
+### 1. 엔티티 클래스 구현
 
 
 __도메인(Entity) 목록__
@@ -53,7 +53,7 @@ https://www.erdcloud.com/d/PwNZ7b9zzwQKXfHyg
 
 
 
-#### 2. 구현 요구 사항
+### 2. 구현 요구 사항
 
 * 회원 기능
   * 회원 등록
@@ -69,3 +69,30 @@ https://www.erdcloud.com/d/PwNZ7b9zzwQKXfHyg
 
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/0cf66e48-6e18-46b4-a4b2-b6ac9935d900)
 
+__Entity, Repository, Service 란?__
+* Entity: @Entity, 데이터베이스의 구조를 만든다. 필드를 선언하고 JPA가 동적으로 테이블을 생성해준다.
+* Repository: @Repository, 데이터베이스에 접근하기 위한 계층이다. 객체의 CRUD를 수행하는 메서드를 선언한다. JpaRepository를 상속받아 인터페이스로 사용하지 않고, 직접 클래스로 구현했다.
+* Service: @Service, 비즈니스 로직을 구현하는 계층이다. 클라이언트의 요청을 처리하고 정보를 가공해 전달한다. 
+
+
+1) 회원 기능(Member)
+   * Entity: 회원 아이디(id, PK), 회원 이름(username), 회원 주소(Address), 회원 주문 정보(orders)
+   * Repository: 회원 등록(save), 회원 조회(findOne, findAll, findByName)
+   * Service: 회원 등록(join), 중복 회원 검증(validateDuplicateMember), 회원 조회(findOne, findMembers, findByName)
+2) 상품 기능(Item)
+   * Entity
+     * 각각의 상품을 DTYPE으로 구분
+     * 상속 관계의 클래스를 단일 테이블로 관리(한 번의 쿼리문으로 전체 상품을 조회할 수 있기 때문에 성능적으로 좋음)
+     * 상품 아이디(id, PK), 상품 이름(name), 가격(price), 재고(stockQuantity), categoryItems(연관관계 중간 테이블)
+     * 비즈니스 로직: addStock(주문 취소로 인한 재고 추가), removeStock(주문 접수로 인한 재고 감소)
+   * Repository: 상품 등록(save), 상품 조회(findOne, findAll)
+   * Service: 상품 등록(enroll), 상품 조회(findOne, findItems)
+3) 주문 기능(Order)
+   * Entity
+      * 주문 아이디(id, PK), 주문자 정보(member), 주문 상품(orderItems), 배송(delivery), 주문 시간(orderDate), 주문 상태(status)
+      * 연관관계 편의 메서드(api 구현시 연관관계를 맺어주는 역할): setMember, addOrderItem, setDelivery
+      * 생성 편의 메서드: createOrder
+      * 비즈니스 로직: cancel
+      * 조회 로직: getTotalPrice
+   * Repository: 상품 주문(save), 주문 내역 조회(findOne)
+   * Service: 상품 주문(order), 주문 취소(cancelOrder)
