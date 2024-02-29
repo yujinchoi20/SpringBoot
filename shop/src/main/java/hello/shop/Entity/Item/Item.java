@@ -11,7 +11,7 @@ import java.util.List;
 @Getter @Setter
 @DiscriminatorColumn(name = "dtype")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Item {
+public abstract class Item {
 
     @Id @GeneratedValue
     @Column(name = "item_id")
@@ -26,4 +26,25 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     private List<CategoryItem> categoryItems = new ArrayList<>();
+
+    /**
+     * 비즈니스 로직
+     * 재고 관리 - 상품 구매: stockQuantity += quantity, 상품 반품: stockQuantity -= quantity
+     */
+
+    //반품
+    public void addStock(int quantity) {
+        this.stockQuantity += quantity;
+    }
+
+    //구매
+    public void removeStock(int quantity) {
+        int restStock = this.stockQuantity - quantity;
+
+        if(restStock < 0) {
+            throw new IllegalStateException("재고가 부족합니다. 구매 수량을 조정해주세요.");
+        }
+
+        this.stockQuantity = restStock;
+    }
 }

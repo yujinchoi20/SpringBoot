@@ -2,6 +2,7 @@ package hello.shop.Entity.Order;
 
 import hello.shop.Entity.Member.Member;
 import hello.shop.Entity.Order.Delivery.Delivery;
+import hello.shop.Entity.Order.Delivery.DeliveryStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,5 +54,54 @@ public class Order {
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
+    }
+
+    /*
+        생성 편의 메서드
+     */
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+
+        for(OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+
+        return order;
+    }
+
+    /*
+        비즈니스 로직
+        주문 취소: 주문 상태에 따라 취소가 불가능할 수도 있음
+
+        엔티티가 비즈니스 로직을 가지고 객체 지향의 특성을 적극 활용하는 도메인 모델 패턴을 사용
+     */
+    public void cancel() {
+        if(delivery.getStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("이미 배송완료/배송중 상태인 상품은 취소가 불가능합니다.");
+        }
+
+        this.setStatus(OrderStatus.CANCEL);
+        for(OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+    /*
+        조회 로직
+        전체 주문 가격 조회: 회원 한 명의 전체 주문 가격 조회
+     */
+    public int getTotalPrice() {
+        int totalPrice = 0;
+
+        for(OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getOrderPrice();
+        }
+
+        return totalPrice;
     }
 }

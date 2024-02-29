@@ -13,4 +13,15 @@ public class Book extends Item {
 
     private String author;
     private String isbn;
+
+    /*
+        생성 편의 메서드
+     */
+    public void addBook(String author, String isbn, String name, int price, int quantity) {
+        this.author = author;
+        this.isbn = isbn;
+        this.setName(name);
+        this.setPrice(price);
+        this.setStockQuantity(quantity);
+    }
 }

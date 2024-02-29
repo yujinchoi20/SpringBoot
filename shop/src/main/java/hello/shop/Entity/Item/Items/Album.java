@@ -13,4 +13,15 @@ public class Album extends Item {
 
     private String artist;
     private String etc;
+
+    /*
+        생성 편의 메서드
+     */
+    public void addBook(String artist, String etc, String name, int price, int quantity) {
+        this.artist = artist;
+        this.etc = etc;
+        this.setName(name);
+        this.setPrice(price);
+        this.setStockQuantity(quantity);
+    }
 }
