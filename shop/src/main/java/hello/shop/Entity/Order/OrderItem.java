@@ -40,11 +40,10 @@ public class OrderItem {
 
     /*
         비즈니스 로직
-        주문 취소: 재고 증가, 주문 상태 변경 OrderStatus(CANCEL)
+        주문 취소: 재고 증가, 주문 상태 변경은 Order 비즈니스 로직에서 변경함.
      */
     public void cancel() {
         getItem().addStock(count); //재고 증가
-        getOrder().setStatus(OrderStatus.CANCEL); //주문 상태를 '취소'로 변경
     }
 
     /*
