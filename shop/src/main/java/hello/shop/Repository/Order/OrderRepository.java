@@ -25,7 +25,11 @@ public class OrderRepository {
     private final EntityManager em;
 
     public Long save(Order order) {
-        em.persist(order);
+        if(order.getId() == null) {
+            em.persist(order);
+        } else {
+            em.merge(order);
+        }
         return order.getId();
     }
 
@@ -88,7 +92,7 @@ public class OrderRepository {
 
         //회원 이름 검색
         if(StringUtils.hasText(orderSearch.getMemberName())) {
-            Predicate name = cb.like(m.<String>get("name"), "%" + orderSearch.getMemberName() + "%");
+            Predicate name = cb.like(m.<String>get("username"), "%" + orderSearch.getMemberName() + "%");
             criteria.add(name);
         }
 

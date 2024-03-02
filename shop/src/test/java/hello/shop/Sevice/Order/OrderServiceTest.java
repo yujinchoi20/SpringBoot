@@ -42,7 +42,7 @@ class OrderServiceTest {
 
         //상품 등록
         Book book = createBook();
-        itemService.enroll(book);
+        itemService.saveItem(book);
 
         //상품 주문 수량
         int orderCount = 2;
@@ -72,7 +72,7 @@ class OrderServiceTest {
 
         //상품 등록
         Item item = createBook();
-        itemService.enroll(item);
+        itemService.saveItem(item);
 
         int orderCount = 11;
 
@@ -93,7 +93,7 @@ class OrderServiceTest {
 
         //상품 등록
         Item item = createBook();
-        itemService.enroll(item);
+        itemService.saveItem(item);
 
         Long orderId = orderService.order(member.getId(), item.getId(), orderCount);
         Order getOrder = orderRepository.findOne(orderId);

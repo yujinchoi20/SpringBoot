@@ -6,6 +6,7 @@ import hello.shop.Entity.Order.Delivery.Delivery;
 import hello.shop.Entity.Order.Delivery.DeliveryStatus;
 import hello.shop.Entity.Order.Order;
 import hello.shop.Entity.Order.OrderItem;
+import hello.shop.Entity.Order.OrderSearch;
 import hello.shop.Repository.Item.ItemRepository;
 import hello.shop.Repository.Member.MemberRepository;
 import hello.shop.Repository.Order.OrderRepository;
@@ -55,5 +56,8 @@ public class OrderService {
         order.cancel();
     }
 
-    // public List<Order> findOrders() {}
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        List<Order> orders = orderRepository.findAllByCriteria(orderSearch);
+        return orders;
+    }
 }

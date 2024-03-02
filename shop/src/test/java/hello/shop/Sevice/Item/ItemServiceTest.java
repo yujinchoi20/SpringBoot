@@ -29,11 +29,11 @@ class ItemServiceTest {
     public void 상품등록() {
         //Given
         Book book = new Book();
-        book.addBook("정유정", "123", "완전한 행복", 15000, 100);
+        book = addBook("정유정", "123", "완전한 행복", 15000, 100);
 
 
         //When
-        itemService.enroll(book);
+        itemService.saveItem(book);
         Item findBook = itemService.findOne(book.getId());
 
         //Then
@@ -41,5 +41,17 @@ class ItemServiceTest {
         log.info("Name = {}", book.getName());
         log.info("Author = {}", book.getAuthor());
         log.info("Price = {}", book.getPrice());
+    }
+
+    public Book addBook(String author, String isbn, String name, int price, int quantity) {
+        Book book = new Book();
+
+        book.setAuthor(author);
+        book.setIsbn(isbn);
+        book.setName(name);
+        book.setPrice(price);
+        book.setStockQuantity(quantity);
+
+        return book;
     }
 }
