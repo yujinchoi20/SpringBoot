@@ -1,7 +1,9 @@
 package hello.shop.web.Item;
 
 import hello.shop.Entity.Item.Item;
+import hello.shop.Entity.Item.Items.Album;
 import hello.shop.Entity.Item.Items.Book;
+import hello.shop.Entity.Item.Items.Movie;
 import hello.shop.Sevice.Item.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,16 +21,33 @@ import java.util.List;
 @Slf4j
 public class ItemController {
 
+    /**
+     * Item 추가 시 어떤 종류의 상품인지 카테고리를 설정하여 추가하는 방법으로 변경할 것
+     * 1. item/new 매핑 전에 종류를 선택하는 페이지 추가
+     * 2. Book, Album, Movie 3가지 버튼 생성 -> items/new
+     * 3. items/new/book, items/new/album, items/new/movie
+     * 4. 종류에 따라 입력해야 하는 필드가 다름
+     * 5. 종류에 따라 Item을 등록하고 목록도 종류별로 조회할 수 있도록 구현하기
+     *
+     * Form을 공통 입력을 부모 클래스로 묶고, 개별 입력을 자식 클래스로 묶으면?
+     */
     private final ItemService itemService;
 
     @GetMapping("/items/new")
-    public String createForm(Model model) {
-        model.addAttribute("form", new BookForm());
-        return "items/createItemForm";
+    public String selectCategory() {
+
+        return "items/selectItemCategory";
     }
 
-    @PostMapping("/items/new")
-    public String create(BookForm form) {
+    //Book 아이템 추가
+    @GetMapping("/items/new/book")
+    public String createBookForm(Model model) {
+        model.addAttribute("form", new BookForm());
+        return "items/createBookForm";
+    }
+
+    @PostMapping("/items/new/book")
+    public String createBook(BookForm form) {
         Book book = new Book();
         book.setAuthor(form.getAuthor());
         book.setIsbn(form.getIsbn());
@@ -36,8 +55,52 @@ public class ItemController {
         book.setPrice(form.getPrice());
         book.setStockQuantity(form.getStockQuantity());
 
-        log.info("Book = {}, {}, {}, {}, {}", form.getAuthor(), form.getIsbn(), form.getName(), form.getPrice(), form.getStockQuantity());
+        //log.info("Book = {}, {}, {}, {}, {}", form.getAuthor(), form.getIsbn(), form.getName(), form.getPrice(), form.getStockQuantity());
         itemService.saveItem(book);
+
+        return "redirect:/items";
+    }
+
+    //Album 아이템 추가
+    @GetMapping("/items/new/album")
+    public String createAlbumForm(Model model) {
+        model.addAttribute("form", new AlbumForm());
+        return "items/createAlbumForm";
+    }
+
+    @PostMapping("/items/new/album")
+    public String createAlbum(AlbumForm form) {
+        Album album = new Album();
+        album.setArtist(form.getArtist());
+        album.setEtc(form.getEtc());
+        album.setName(form.getName());
+        album.setPrice(form.getPrice());
+        album.setStockQuantity(form.getStockQuantity());
+
+        //log.info("Album = {}, {}, {}, {}, {}", form.getArtist(), form.getEtc(), form.getName(), form.getPrice(), form.getStockQuantity());
+        itemService.saveItem(album);
+
+        return "redirect:/items";
+    }
+
+    //movie 아이템 추가
+    @GetMapping("/items/new/movie")
+    public String createForm(Model model) {
+        model.addAttribute("form", new MovieForm());
+        return "items/createMovieForm";
+    }
+
+    @PostMapping("/items/new/movie")
+    public String create(MovieForm form) {
+        Movie movie = new Movie();
+        movie.setActor(form.getActor());
+        movie.setDirector(form.getDirector());
+        movie.setName(form.getName());
+        movie.setPrice(form.getPrice());
+        movie.setStockQuantity(form.getStockQuantity());
+
+        //log.info("Movie = {}, {}, {}, {}, {}", form.getActor(), form.getDirector(), form.getName(), form.getPrice(), form.getStockQuantity());
+        itemService.saveItem(movie);
 
         return "redirect:/items";
     }
@@ -45,6 +108,11 @@ public class ItemController {
     @GetMapping("/items")
     public String list(Model model) {
         List<Item> items = itemService.findItems();
+
+//        for(Item item : items) {
+//            log.info("Item Type = {}", item.getClass().getSimpleName());
+//        }
+
         model.addAttribute("items", items);
         return "items/itemList";
     }
@@ -53,27 +121,60 @@ public class ItemController {
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
         Item editItem = itemService.findOne(itemId);
 
-        //DTYPE을 활용해 어떤 종류의 상품인지 알아낼 필요가 있어보임
+        //log.info("Item Type = {}", editItem.getClass().getSimpleName());
+        String type = editItem.getClass().getSimpleName();
+        String updateItemForm = "";
+        //아이템 조회 후, DTYPE에 따라 객체 선택
 
-        Book editBook = (Book) editItem;
-        BookForm form = new BookForm();
+        if(type.equals("Book")) {
+            Book editBook = (Book) editItem;
+            BookForm form = new BookForm();
 
-        form.setId(editBook.getId());
-        form.setAuthor(editBook.getAuthor());
-        form.setIsbn(editBook.getIsbn());
-        form.setName(editBook.getName());
-        form.setPrice(editBook.getPrice());
-        form.setStockQuantity(editBook.getStockQuantity());
+            form.setId(editBook.getId());
+            form.setAuthor(editBook.getAuthor());
+            form.setIsbn(editBook.getIsbn());
+            form.setName(editBook.getName());
+            form.setPrice(editBook.getPrice());
+            form.setStockQuantity(editBook.getStockQuantity());
 
-        model.addAttribute("form", form);
+            model.addAttribute("form", form);
+            updateItemForm =  "updateBookForm";
+        } else if(type.equals("Album")) {
+            Album editAlbum = (Album) editItem;
+            AlbumForm form = new AlbumForm();
 
-        return "items/updateItemForm";
+            form.setId(editAlbum.getId());
+            form.setArtist(editAlbum.getArtist());
+            form.setEtc(editAlbum.getEtc());
+            form.setName(editAlbum.getName());
+            form.setPrice(editAlbum.getPrice());
+            form.setStockQuantity(editAlbum.getStockQuantity());
+
+            model.addAttribute("form", form);
+            updateItemForm = "updateAlbumForm";
+        } else if(type.equals("Movie")) {
+            Movie editMovie = (Movie) editItem;
+            MovieForm form = new MovieForm();
+
+            form.setId(editMovie.getId());
+            form.setActor(editMovie.getActor());
+            form.setDirector(editMovie.getDirector());
+            form.setName(editMovie.getName());
+            form.setPrice(editMovie.getPrice());
+            form.setStockQuantity(editMovie.getStockQuantity());
+
+            model.addAttribute("form", form);
+            updateItemForm = "updateMovieForm";
+        }
+
+        return "items/" + updateItemForm;
     }
 
     @PostMapping("/items/{itemId}/edit")
     public String updateItem(@PathVariable("itemId") Long itemId, @ModelAttribute("form") BookForm form) {
         //영속화되어 있는 엔티티에 변경 감지 기능을 사용!
         itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
+
 
         /*
             org.hibernate.PersistentObjectException: detached entity passed to persist:

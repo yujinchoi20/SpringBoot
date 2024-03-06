@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header">
-    <title>상품 수정</title>
+<head th:replace="~{fragments/header :: header}">
+    <title>Book 상품 수정</title>
 </head>
 <body>
 <div class="container">
-    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
     <form th:object="${form}" method="post">
         <!-- id -->
         <input type="hidden" th:field="*{id}" />
@@ -33,9 +33,11 @@
             <input type="text" th:field="*{isbn}" class="form-control"
                    placeholder="ISBN을 입력하세요" />
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <br>
+        <button type="submit" class="btn btn-primary">수정</button>
     </form>
-    <div th:replace="fragments/footer :: footer" />
+    <br/>
+    <div th:replace="~{fragments/footer :: footer}" />
 </div> <!-- /container -->
 </body>
 </html>

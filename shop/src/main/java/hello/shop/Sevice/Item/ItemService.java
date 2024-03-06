@@ -1,6 +1,9 @@
 package hello.shop.Sevice.Item;
 
 import hello.shop.Entity.Item.Item;
+import hello.shop.Entity.Item.Items.Album;
+import hello.shop.Entity.Item.Items.Book;
+import hello.shop.Entity.Item.Items.Movie;
 import hello.shop.Repository.Item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ public class ItemService {
      * enroll: 상품 등록
      * findOne: 상품 하나 조회
      * findItems: 전체 상품 조회
+     * update: Item, Book, Album, Movie
      */
     private final ItemRepository itemRepository;
 
@@ -41,4 +45,5 @@ public class ItemService {
         item.setPrice(price);
         item.setStockQuantity(stockQuantity);
     }
+
 }
