@@ -157,10 +157,9 @@ __03/22/2024__
    * 상품 목록 items: 상품 종류를 명시, itemList에 th 태그 추가(상품 종류), item.getClass().getSimpleName() 값 사용
    * 상품 수정도 상품 종류에 따라 구분함 -> itemController의 updateItemForm 메서드에 if 조건문을 사용하여 상품 종류를 판별하고, updateForm으로 이동
    * 상품 정보 수정 폼(기존 updateItemForm -> 변경 updateBookForm, updateAlbumForm, updateMovieForm)
-   * 상품 정보 수정 로직 수정(itemService 계층에서 변경 감지 기능을 사용하여 상품 정보 수정하기) - __진행중__
+   * 상품 정보 수정 로직 수정(itemService 계층에서 변경 감지 기능을 사용하여 상품 정보 수정)
 
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/cc325982-b02c-4ec0-b66a-83c13df533de)
 
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/8a8ed043-caa5-4842-9eb1-9deb7f3aa7a9)
-
 
