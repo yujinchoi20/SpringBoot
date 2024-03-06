@@ -46,4 +46,24 @@ public class ItemService {
         item.setStockQuantity(stockQuantity);
     }
 
+    @Transactional
+    public void updateBook(Long id, String author, String isbn) {
+        Book book = (Book) itemRepository.findOne(id);
+        book.setAuthor(author);
+        book.setIsbn(isbn);
+    }
+
+    @Transactional
+    public void updateAlbum(Long id, String artist, String etc) {
+        Album album = (Album) itemRepository.findOne(id);
+        album.setArtist(artist);
+        album.setEtc(etc);
+    }
+
+    @Transactional
+    public void updateMovie(Long id, String actor, String director) {
+        Movie movie = (Movie) itemRepository.findOne(id);
+        movie.setActor(actor);
+        movie.setDirector(director);
+    }
 }

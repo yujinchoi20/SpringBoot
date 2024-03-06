@@ -171,9 +171,24 @@ public class ItemController {
     }
 
     @PostMapping("/items/{itemId}/edit")
-    public String updateItem(@PathVariable("itemId") Long itemId, @ModelAttribute("form") BookForm form) {
+    public String updateItem(@PathVariable("itemId") Long itemId,
+                             @ModelAttribute("bookForm") BookForm bookForm,
+                             @ModelAttribute("albumForm") AlbumForm albumForm,
+                             @ModelAttribute("movieForm") MovieForm movieForm) {
         //영속화되어 있는 엔티티에 변경 감지 기능을 사용!
-        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
+        Item findItem = itemService.findOne(itemId);
+        String type = findItem.getClass().getSimpleName();
+
+        if(type.equals("Book")) {
+            itemService.updateItem(itemId, bookForm.getName(), bookForm.getPrice(), bookForm.getStockQuantity());
+            itemService.updateBook(itemId, bookForm.getAuthor(), bookForm.getIsbn());
+        } else if(type.equals("Album")) {
+            itemService.updateItem(itemId, albumForm.getName(), albumForm.getPrice(), albumForm.getStockQuantity());
+            itemService.updateAlbum(itemId, albumForm.getArtist(), albumForm.getEtc());
+        } else if(type.equals("Movie")) {
+            itemService.updateItem(itemId, movieForm.getName(), movieForm.getPrice(), movieForm.getStockQuantity());
+            itemService.updateMovie(itemId, movieForm.getActor(), movieForm.getDirector());
+        }
 
 
         /*

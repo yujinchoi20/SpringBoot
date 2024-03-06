@@ -2,6 +2,7 @@ package hello.shop.Sevice.Item;
 
 import hello.shop.Entity.Item.CategoryItem;
 import hello.shop.Entity.Item.Item;
+import hello.shop.Entity.Item.Items.Album;
 import hello.shop.Entity.Item.Items.Book;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
@@ -53,5 +54,45 @@ class ItemServiceTest {
         book.setStockQuantity(quantity);
 
         return book;
+    }
+
+    @Test
+    public void 상품수정() throws Exception {
+        //Given
+        Album album = new Album();
+        album.setArtist("아이브");
+        album.setEtc("걸그룹");
+        album.setStockQuantity(100);
+        album.setName("I AM");
+        album.setPrice(30000);
+
+        itemService.saveItem(album);
+
+        //When
+        Item item = itemService.findOne(album.getId());
+        String type = item.getClass().getSimpleName();
+        log.info("TYPE = {}", item.getClass().getSimpleName());
+
+        if(type.equals("Book")) {
+            log.info("Book 정보 수정");
+        } else if(type.equals("Album")) {
+            Album findItem = (Album) itemService.findOne(album.getId());
+            itemService.updateItem(findItem.getId(), "소년", 20000, 100);
+            itemService.updateAlbum(findItem.getId(), "10CM", "가수");
+
+            //Then
+            log.info("앨범 정보 = {}, {}, {}, {}, {}",
+                    findItem.getName(),
+                    findItem.getArtist(),
+                    findItem.getEtc(),
+                    findItem.getPrice(),
+                    findItem.getStockQuantity());
+        } else if(type.equals("Movie")) {
+            log.info("Movie 정보 수정");
+        }
+
+
+
+
     }
 }
