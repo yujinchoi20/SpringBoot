@@ -144,3 +144,23 @@ __Entity, Repository, Service 란?__
 1. 상품 등록/수정 시 DTYPE 값을 통해서 해당 아이템이 어떤 객체인지 확인한 후, 객체에 맞는 값을 설정할 수 있도록 수정(기존 코드는 Book 객체의 등록/수정만 다루고 있음)
 2. 회원 주문 내역 조회시 주문한 상품의 총 가격을 보여주는 로직 구현(기존 코드의 getTotalPrice() 메서드 사용 예정)
 3. Spring 서버 여러 개를 실행하여 부하 테스트 진행 - nGrinder 성능 테스트 툴 사용 예정정
+
+--------------------------------
+
+## 추가 개발 사항
+
+__03/22/2024__
+
+* 상품 등록을 상품의 종류에 따라 구분
+   * 기존 items/new: Book 상품 등록 폼 --> 변경: items/new: 상품 종류 선택 페이지(button 태그를 사용해 선택)
+   * 추가 items/new/book, items/new/album, items/new/movie: 각 종류의 상품 등록 폼
+   * 상품 목록 items: 상품 종류를 명시, itemList에 th 태그 추가(상품 종류), item.getClass().getSimpleName() 값 사용
+   * 상품 수정도 상품 종류에 따라 구분함 -> itemController의 updateItemForm 메서드에 if 조건문을 사용하여 상품 종류를 판별하고, updateForm으로 이동
+   * 상품 정보 수정 폼(기존 updateItemForm -> 변경 updateBookForm, updateAlbumForm, updateMovieForm)
+   * 상품 정보 수정 로직 수정(itemService 계층에서 변경 감지 기능을 사용하여 상품 정보 수정하기) - __진행중__
+
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/cc325982-b02c-4ec0-b66a-83c13df533de)
+
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/8a8ed043-caa5-4842-9eb1-9deb7f3aa7a9)
+
+
