@@ -150,7 +150,7 @@ __Entity, Repository, Service 란?__
 
 ## 추가 개발 사항
 
-__03/22/2024__
+__03/06/2024__
 
 * 상품 등록을 상품의 종류에 따라 구분
    * 기존 items/new: Book 상품 등록 폼 --> 변경: items/new: 상품 종류 선택 페이지(button 태그를 사용해 선택)
@@ -164,3 +164,7 @@ __03/22/2024__
 
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/8a8ed043-caa5-4842-9eb1-9deb7f3aa7a9)
 
+__03/07/2024__
+* 생성 편의 메서드 추가(현재는 setter 사용 횟수에 큰 차이가 없지만 궁극적으로 setter 사용 횟수를 줄이는 것을 목표로 함)
+  * Book/Album/Movie: createBook/createAlbum/createMovie
+  * BookForm/AlbumForm/MovieForm: createBookForm/createAlbumForm/createMovieForm
