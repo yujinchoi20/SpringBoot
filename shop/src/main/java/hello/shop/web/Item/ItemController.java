@@ -5,6 +5,9 @@ import hello.shop.Entity.Item.Items.Album;
 import hello.shop.Entity.Item.Items.Book;
 import hello.shop.Entity.Item.Items.Movie;
 import hello.shop.Sevice.Item.ItemService;
+import hello.shop.web.Item.Form.AlbumForm;
+import hello.shop.web.Item.Form.BookForm;
+import hello.shop.web.Item.Form.MovieForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -29,13 +32,11 @@ public class ItemController {
      * 4. 종류에 따라 입력해야 하는 필드가 다름
      * 5. 종류에 따라 Item을 등록하고 목록도 종류별로 조회할 수 있도록 구현하기
      *
-     * Form을 공통 입력을 부모 클래스로 묶고, 개별 입력을 자식 클래스로 묶으면?
      */
     private final ItemService itemService;
 
     @GetMapping("/items/new")
     public String selectCategory() {
-
         return "items/selectItemCategory";
     }
 
@@ -47,13 +48,9 @@ public class ItemController {
     }
 
     @PostMapping("/items/new/book")
-    public String createBook(BookForm form) {
-        Book book = new Book();
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
+    public String createItemBook(BookForm form) {
+        Book book = Book.createBook(form.getName(), form.getPrice(), form.getStockQuantity(),
+                form.getAuthor(), form.getIsbn());
 
         //log.info("Book = {}, {}, {}, {}, {}", form.getAuthor(), form.getIsbn(), form.getName(), form.getPrice(), form.getStockQuantity());
         itemService.saveItem(book);
@@ -69,13 +66,9 @@ public class ItemController {
     }
 
     @PostMapping("/items/new/album")
-    public String createAlbum(AlbumForm form) {
-        Album album = new Album();
-        album.setArtist(form.getArtist());
-        album.setEtc(form.getEtc());
-        album.setName(form.getName());
-        album.setPrice(form.getPrice());
-        album.setStockQuantity(form.getStockQuantity());
+    public String createItemAlbum(AlbumForm form) {
+        Album album = Album.createAlbum(form.getName(), form.getPrice(), form.getStockQuantity(),
+                form.getArtist(), form.getEtc());
 
         //log.info("Album = {}, {}, {}, {}, {}", form.getArtist(), form.getEtc(), form.getName(), form.getPrice(), form.getStockQuantity());
         itemService.saveItem(album);
@@ -85,19 +78,15 @@ public class ItemController {
 
     //movie 아이템 추가
     @GetMapping("/items/new/movie")
-    public String createForm(Model model) {
+    public String createMovieForm(Model model) {
         model.addAttribute("form", new MovieForm());
         return "items/createMovieForm";
     }
 
     @PostMapping("/items/new/movie")
-    public String create(MovieForm form) {
-        Movie movie = new Movie();
-        movie.setActor(form.getActor());
-        movie.setDirector(form.getDirector());
-        movie.setName(form.getName());
-        movie.setPrice(form.getPrice());
-        movie.setStockQuantity(form.getStockQuantity());
+    public String createItemMovie(MovieForm form) {
+        Movie movie = Movie.createMovie(form.getName(), form.getPrice(), form.getStockQuantity(),
+                form.getDirector(), form.getActor());
 
         //log.info("Movie = {}, {}, {}, {}, {}", form.getActor(), form.getDirector(), form.getName(), form.getPrice(), form.getStockQuantity());
         itemService.saveItem(movie);
@@ -128,40 +117,22 @@ public class ItemController {
 
         if(type.equals("Book")) {
             Book editBook = (Book) editItem;
-            BookForm form = new BookForm();
-
-            form.setId(editBook.getId());
-            form.setAuthor(editBook.getAuthor());
-            form.setIsbn(editBook.getIsbn());
-            form.setName(editBook.getName());
-            form.setPrice(editBook.getPrice());
-            form.setStockQuantity(editBook.getStockQuantity());
+            BookForm form = BookForm.createBookForm(editBook.getId(), editBook.getName(), editBook.getPrice(),
+                    editBook.getStockQuantity(), editBook.getAuthor(), editBook.getIsbn());
 
             model.addAttribute("form", form);
             updateItemForm =  "updateBookForm";
         } else if(type.equals("Album")) {
             Album editAlbum = (Album) editItem;
-            AlbumForm form = new AlbumForm();
-
-            form.setId(editAlbum.getId());
-            form.setArtist(editAlbum.getArtist());
-            form.setEtc(editAlbum.getEtc());
-            form.setName(editAlbum.getName());
-            form.setPrice(editAlbum.getPrice());
-            form.setStockQuantity(editAlbum.getStockQuantity());
+            AlbumForm form = AlbumForm.createAlbumForm(editAlbum.getId(), editAlbum.getName(), editAlbum.getPrice(),
+                    editAlbum.getStockQuantity(), editAlbum.getArtist(), editAlbum.getEtc());
 
             model.addAttribute("form", form);
             updateItemForm = "updateAlbumForm";
         } else if(type.equals("Movie")) {
             Movie editMovie = (Movie) editItem;
-            MovieForm form = new MovieForm();
-
-            form.setId(editMovie.getId());
-            form.setActor(editMovie.getActor());
-            form.setDirector(editMovie.getDirector());
-            form.setName(editMovie.getName());
-            form.setPrice(editMovie.getPrice());
-            form.setStockQuantity(editMovie.getStockQuantity());
+            MovieForm form = MovieForm.createMovieForm(editMovie.getId(), editMovie.getName(), editMovie.getPrice(),
+                    editMovie.getStockQuantity(), editMovie.getActor(), editMovie.getDirector());
 
             model.addAttribute("form", form);
             updateItemForm = "updateMovieForm";

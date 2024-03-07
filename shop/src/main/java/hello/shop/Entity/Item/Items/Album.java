@@ -17,11 +17,14 @@ public class Album extends Item {
     /*
         생성 편의 메서드
      */
-    public void addBook(String artist, String etc, String name, int price, int quantity) {
-        this.artist = artist;
-        this.etc = etc;
-        this.setName(name);
-        this.setPrice(price);
-        this.setStockQuantity(quantity);
+    public static Album createAlbum(String name, int price, int stockQuantity, String artist, String etc) {
+        Album album = new Album();
+        album.setName(name);
+        album.setPrice(price);
+        album.setStockQuantity(stockQuantity);
+        album.setArtist(artist);
+        album.setEtc(etc);
+
+        return album;
     }
 }

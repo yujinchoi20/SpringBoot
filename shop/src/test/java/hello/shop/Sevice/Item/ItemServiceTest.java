@@ -29,9 +29,7 @@ class ItemServiceTest {
     @Test
     public void 상품등록() {
         //Given
-        Book book = new Book();
-        book = addBook("정유정", "123", "완전한 행복", 15000, 100);
-
+        Book book = Book.createBook("완전한 행복", 15000, 100, "정유정", "1234");
 
         //When
         itemService.saveItem(book);
@@ -44,27 +42,10 @@ class ItemServiceTest {
         log.info("Price = {}", book.getPrice());
     }
 
-    public Book addBook(String author, String isbn, String name, int price, int quantity) {
-        Book book = new Book();
-
-        book.setAuthor(author);
-        book.setIsbn(isbn);
-        book.setName(name);
-        book.setPrice(price);
-        book.setStockQuantity(quantity);
-
-        return book;
-    }
-
     @Test
     public void 상품수정() throws Exception {
         //Given
-        Album album = new Album();
-        album.setArtist("아이브");
-        album.setEtc("걸그룹");
-        album.setStockQuantity(100);
-        album.setName("I AM");
-        album.setPrice(30000);
+        Album album = Album.createAlbum("I AM", 30000, 100, "아이브", "걸그룹");
 
         itemService.saveItem(album);
 
@@ -77,8 +58,8 @@ class ItemServiceTest {
             log.info("Book 정보 수정");
         } else if(type.equals("Album")) {
             Album findItem = (Album) itemService.findOne(album.getId());
-            itemService.updateItem(findItem.getId(), "소년", 20000, 100);
-            itemService.updateAlbum(findItem.getId(), "10CM", "가수");
+            itemService.updateItem(findItem.getId(), "Love 119", 20000, 100);
+            itemService.updateAlbum(findItem.getId(), "라이즈", "보이그룹");
 
             //Then
             log.info("앨범 정보 = {}, {}, {}, {}, {}",
@@ -90,9 +71,5 @@ class ItemServiceTest {
         } else if(type.equals("Movie")) {
             log.info("Movie 정보 수정");
         }
-
-
-
-
     }
 }
