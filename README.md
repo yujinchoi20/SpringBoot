@@ -172,5 +172,21 @@ __03/07/2024__
 
 __03/08/2024__
 
-* Item 객체에 type 필드를 하나 추가해 상품 목록을 상품 종류별로 검색할 수 있는 기능 추가중
-  * @DiscriminatorValue으로 설정한 값을 통해 조회하려 했으나, JPQL에서는 dtype 키워드를 사용하지 못해 Item 객체에 type 필드 추가 
+* Item 객체에 type 필드를 하나 추가해 상품 목록을 상품 종류별로 검색할 수 있는 기능 추가
+  * @DiscriminatorValue으로 설정한 값을 통해 조회하려 했으나, JPQL에서는 dtype 키워드를 사용하지 못해 Item 객체에 type 필드 추가
+  * ItemType(Enum, Book/Album, Movie), ItemSearch(Class) 추가
+  * itemList.html: select 태그 추가하여 상품 종류 선택 가능, th:object="${itemSearch}"/th:field="*{itemType}" 등의 타임리프 문법 사용(itemSearch.itemType)
+  * th:object를 통해 form 태그에 담을 데이터 설정 -> @ModelAttribute("itemSearch") ItemSearch itemSearch 파라미터를 통해 데이터 받음
+  * itemRepositoy: findByType(ItemType) 메서드 생성 -> type 값을 통해 상품 조회
+  * itemService: findType(ItemType) 메서드 생성 -> type 값을 통해 상품 조회
+  * itemController: itemList 메서드 수정, 파라미터 값 추가(ItemSearch), 상품 조회 메서드 변경(findItems() -> findType())
+
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/627bc50b-3e91-4f89-bc7f-1c6448997ec6)
+
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/d233d6d9-cad6-4057-9dc5-32035478653e)
+
+
+
+
+
+
