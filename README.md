@@ -185,7 +185,7 @@ __03/08/2024__
 
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/d233d6d9-cad6-4057-9dc5-32035478653e)
 
-
+#### itemType과 type 필드를 사용해 공통화 할 필요가 있음.. 지금은 상품 종류를 추가할 때마다 추가할 코드가 너무 많음, Category 객체 활용해보기!
 
 
 
