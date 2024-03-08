@@ -165,6 +165,12 @@ __03/06/2024__
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/8a8ed043-caa5-4842-9eb1-9deb7f3aa7a9)
 
 __03/07/2024__
+
 * 생성 편의 메서드 추가(현재는 setter 사용 횟수에 큰 차이가 없지만 궁극적으로 setter 사용 횟수를 줄이는 것을 목표로 함)
   * Book/Album/Movie: createBook/createAlbum/createMovie
   * BookForm/AlbumForm/MovieForm: createBookForm/createAlbumForm/createMovieForm
+
+__03/08/2024__
+
+* Item 객체에 type 필드를 하나 추가해 상품 목록을 상품 종류별로 검색할 수 있는 기능 추가중
+  * @DiscriminatorValue으로 설정한 값을 통해 조회하려 했으나, JPQL에서는 dtype 키워드를 사용하지 못해 Item 객체에 type 필드 추가 
