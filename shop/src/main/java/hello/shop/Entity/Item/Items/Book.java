@@ -1,6 +1,7 @@
 package hello.shop.Entity.Item.Items;
 
 import hello.shop.Entity.Item.Item;
+import hello.shop.Entity.Item.ItemType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Book extends Item {
         book.setStockQuantity(stockQuantity);
         book.setAuthor(author);
         book.setIsbn(isbn);
+        book.setType(ItemType.Book);
 
         return book;
     }

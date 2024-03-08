@@ -1,6 +1,8 @@
 package hello.shop.Sevice.Item;
 
 import hello.shop.Entity.Item.Item;
+import hello.shop.Entity.Item.ItemSearch;
+import hello.shop.Entity.Item.ItemType;
 import hello.shop.Entity.Item.Items.Album;
 import hello.shop.Entity.Item.Items.Book;
 import hello.shop.Entity.Item.Items.Movie;
@@ -36,6 +38,11 @@ public class ItemService {
 
     public List<Item> findItems() {
         return itemRepository.findAll();
+    }
+
+    public List<Item> findType(ItemType itemType) {
+        List<Item> items = itemRepository.findByType(itemType);
+        return items;
     }
 
     @Transactional

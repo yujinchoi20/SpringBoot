@@ -1,10 +1,15 @@
 package hello.shop.Repository.Item;
 
 import hello.shop.Entity.Item.Item;
+import hello.shop.Entity.Item.ItemSearch;
+import hello.shop.Entity.Item.ItemType;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -30,9 +35,23 @@ public class ItemRepository {
         return em.find(Item.class, itemId);
     }
 
+    //상품 종류 조회
+    public List<Item> findByType(ItemType itemType) {
+        if(itemType == null) {
+            return em.createQuery("select i from Item i", Item.class)
+                    .getResultList();
+        }
+
+        return em.createQuery("select i from Item i where i.type =: itemType", Item.class)
+                .setParameter("itemType", itemType)
+                .getResultList();
+    }
+
     //전체 상품 조회
     public List<Item> findAll() {
         return em.createQuery("select i from Item i", Item.class)
                 .getResultList();
     }
+
+
 }

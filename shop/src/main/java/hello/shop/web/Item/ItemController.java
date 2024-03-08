@@ -1,6 +1,8 @@
 package hello.shop.web.Item;
 
 import hello.shop.Entity.Item.Item;
+import hello.shop.Entity.Item.ItemSearch;
+import hello.shop.Entity.Item.ItemType;
 import hello.shop.Entity.Item.Items.Album;
 import hello.shop.Entity.Item.Items.Book;
 import hello.shop.Entity.Item.Items.Movie;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -95,12 +98,9 @@ public class ItemController {
     }
 
     @GetMapping("/items")
-    public String list(Model model) {
-        List<Item> items = itemService.findItems();
-
-//        for(Item item : items) {
-//            log.info("Item Type = {}", item.getClass().getSimpleName());
-//        }
+    public String itemList(@ModelAttribute("itemSearch") ItemSearch itemSearch, Model model) {
+        //log.info("Type = {}", itemSearch.getItemType());
+        List<Item> items = itemService.findType(itemSearch.getItemType());
 
         model.addAttribute("items", items);
         return "items/itemList";
@@ -113,7 +113,6 @@ public class ItemController {
         //log.info("Item Type = {}", editItem.getClass().getSimpleName());
         String type = editItem.getClass().getSimpleName();
         String updateItemForm = "";
-        //아이템 조회 후, DTYPE에 따라 객체 선택
 
         if(type.equals("Book")) {
             Book editBook = (Book) editItem;

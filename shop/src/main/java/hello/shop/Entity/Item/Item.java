@@ -27,6 +27,9 @@ public abstract class Item {
     @OneToMany(mappedBy = "item")
     private List<CategoryItem> categoryItems = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private ItemType type;
+
     /**
      * 비즈니스 로직
      * 재고 관리 - 상품 구매: stockQuantity += quantity, 상품 반품: stockQuantity -= quantity

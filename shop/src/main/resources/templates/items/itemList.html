@@ -7,6 +7,20 @@
 <div class="container">
   <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
   <div>
+    <form th:object="${itemSearch}" class="form-inline" >
+      <div class="form-group mx-sm-1 mb-2">
+        <select th:field="*{itemType}" class=ite"form-control" >
+          <option value="">상품 종류</option>
+          <option th:each="type : ${T(hello.shop.Entity.Item.ItemType).values()}"
+                  th:value="${type}"
+                  th:text="${type}" >option
+          </option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary mb-2">검색</button>
+    </form>
+  </div>
+
     <table class="table table-striped">
       <thead>
       <tr>
@@ -32,7 +46,7 @@
       </tbody>
     </table>
   </div>
-  <div th:replace="~{fragments/footer :: footer}"/>
+<div th:replace="~{fragments/footer :: footer}"/>
 </div> <!-- /container -->
 </body>
 </html>

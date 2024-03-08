@@ -1,6 +1,7 @@
 package hello.shop.Entity.Item.Items;
 
 import hello.shop.Entity.Item.Item;
+import hello.shop.Entity.Item.ItemType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public static Movie createMovie(String name, int price, int stockQuantity, Strin
         movie.setStockQuantity(stockQuantity);
         movie.setDirector(director);
         movie.setActor(actor);
+        movie.setType(ItemType.Movie);
 
         return movie;
     }
