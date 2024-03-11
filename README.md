@@ -145,6 +145,7 @@ __Entity, Repository, Service 란?__
 2. 회원 주문 내역 조회시 주문한 상품의 총 가격을 보여주는 로직 구현(기존 코드의 getTotalPrice() 메서드 사용 예정)
 3. Spring 서버 여러 개를 실행하여 부하 테스트 진행 - nGrinder 성능 테스트 툴 사용 예정
 4. 데이터베이스 변경: H2 DB -> MySQL ✔️
+5. JpaReporitory를 상속 받아 레포지토리 구현하기 
 
 --------------------------------
 
