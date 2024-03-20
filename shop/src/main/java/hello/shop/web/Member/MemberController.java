@@ -3,8 +3,11 @@ package hello.shop.web.Member;
 import hello.shop.Entity.Member.Address;
 import hello.shop.Entity.Member.Member;
 import hello.shop.Sevice.Member.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +18,11 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
+
     @GetMapping("/members/new")
     public String createForm(Model model) {
         model.addAttribute("memberForm", new MemberForm());
@@ -33,6 +38,8 @@ public class MemberController {
         Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
         Member member = new Member();
         member.setUsername(form.getName());
+        member.setUserId(form.getUserId());
+        member.setPassword(form.getPassword());
         member.setAddress(address);
 
         memberService.join(member);
@@ -46,5 +53,17 @@ public class MemberController {
         model.addAttribute("members", members);
 
         return "members/memberList";
+    }
+
+    @GetMapping("/members/my-page")
+    public String myPage(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        log.info("MyPage Member = {}", member.getUsername());
+
+        model.addAttribute("member", member);
+
+        return "members/memberPage";
     }
 }

@@ -38,4 +38,10 @@ public class MemberRepository {
                 .setParameter("username", username)
                 .getResultList();
     }
+
+    public Member findByUserId(String userId) {
+        return em.createQuery("select m from Member m where m.userId =: userId", Member.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+    }
 }

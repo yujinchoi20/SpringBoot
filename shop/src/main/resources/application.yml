@@ -23,3 +23,9 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
+
+server:
+  servlet:
+    session:
+      timeout: 30m
+      tracking-modes: cookie
