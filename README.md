@@ -156,7 +156,7 @@ __Entity, Repository, Service 란?__
 ## 개발/구현 예정
 
 1. 상품 등록/수정 시 DTYPE 값을 통해서 해당 아이템이 어떤 객체인지 확인한 후, 객체에 맞는 값을 설정할 수 있도록 수정(기존 코드는 Book 객체의 등록/수정만 다루고 있음) ✔️
-2. 회원 주문 내역 조회시 주문한 상품의 총 가격을 보여주는 로직 구현(기존 코드의 getTotalPrice() 메서드 사용 예정)
+2. 회원 주문 내역 조회시 주문한 상품의 총 가격을 보여주는 로직 구현(기존 코드의 getTotalPrice() 메서드 사용 예정) -> 마이페이지를 따로 만들어 회원 정보, 주문 내역을 볼 수 있도록 만들면 사용자 입장에서 편리할듯
 3. Spring 서버 여러 개를 실행하여 부하 테스트 진행 - nGrinder 성능 테스트 툴 사용 예정
 4. 데이터베이스 변경: H2 DB -> MariaDB ✔️
 5. 연관관계가 맺어진 객체를 대상으로 쿼리문 실행 횟수를 확인하여 필요 이상의 쿼리문이 실행되는지 확인해보기 -> 지연 로딩 적용 ✔️
@@ -210,4 +210,28 @@ __03/08/2024__
   * 사용자 비밀번호 재설정(대문자, 소문자, 숫자, 특수문자 포함 8자 이상)
 
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/cc3e74cf-1d57-4ebe-8b17-39daf6e87f1f)
+
+
+
+__03/20/2024__
+
+마이페이지 구현중 ~ing
+
+사용자의 총 주문 금액 -> 마이페이지 -> 로그인 필요함!
+
+* 마이페이지 구현하기, 요구사항
+  * 요청 URL: /members/my-page
+  * View 화면: memberPage.html
+  * 회원 정보(이름, 주소) 표시
+  * 주문 내역을 개수로 표시
+  * 주문 총 금액 표시: getTotalPrice()
+ 
+* 로그인 구현
+  * 마이페이지 구현을 위해 구현
+  * 아이디와 비밀번호를 입력한 뒤, 아이디와 비밀번호가 일치하면 세션ID 발급
+  * 로그인 전 -> home.html, 로그인 후 -> loginHome.html
+  * 상품 주문 기능에 회원을 선택하는 기능이 필요 없어짐 -> select 태그 삭제하기
+ 
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/6e8f2ffc-f08e-4698-a2fc-aef0feca1359)
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/877f835d-8cf4-4853-a51c-4a7e7c0fd7d0)
 
