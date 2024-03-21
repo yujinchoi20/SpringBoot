@@ -235,3 +235,8 @@ __03/20/2024__
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/6e8f2ffc-f08e-4698-a2fc-aef0feca1359)
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/877f835d-8cf4-4853-a51c-4a7e7c0fd7d0)
 
+__03/21/2024__
+* 로그인 기능 개발 진행
+  * 아이디, 비밀번호 잘못 입력시, 알림창으로 알려주고 다시 로그인 창으로 리다이렉션
+* 관리자 테이블을 만들어 관리자 모드 만들기, 관리자만 상품 등록 가능
+* 세션이 있을 때만 주문 가능
