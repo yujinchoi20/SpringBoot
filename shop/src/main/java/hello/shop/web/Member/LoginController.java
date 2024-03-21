@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -36,23 +38,25 @@ public class LoginController {
             return "members/memberLogin";
         }
 
-        Member member = memberService.findByUserId(form.getUserId());
+        //아이디 잘못 입력시 바로 예외가 터져버리기 때문에 수정할 필요가 있음
+        List<Member> members = memberService.findByUserId(form.getUserId());
 
-        if(member == null) { //아이디가 존재하지 않는다면
-            result.reject("해당 아이디와 일치하는 회원이 없습니다.");
-            return "members/memberLogin";
+        for(Member member : members) {
+            if (member == null) { //아이디가 존재하지 않는다면
+                result.reject("해당 아이디와 일치하는 회원이 없습니다.");
+                return "members/memberLogin";
+            }
+            if (!member.getPassword().equals(form.getPassword())) { //비밀번호가 틀리다면
+                model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
+                model.addAttribute("searchUrl", "/login");
+                return "message";
+            }
+
+            HttpSession session = request.getSession();
+            session.setAttribute(SessionConst.LOGIN_MEMBER, member);
+            log.info("sessionId = {}, createTime = {}", session.getId(), session.getCreationTime());
         }
-        if(!member.getPassword().equals(form.getPassword())) { //비밀번호가 틀리다면
-            //result.reject("비밀번호가 일치하지 않습니다.");
-            model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
-            model.addAttribute("searchUrl", "/login");
-            return "message";
-        }
 
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, member);
-
-        log.info("sessionId = {}, createTime = {}", session.getId(), session.getCreationTime());
         return "redirect:/";
     }
 

@@ -2,7 +2,10 @@ package hello.shop.web.Member;
 
 import hello.shop.Entity.Member.Address;
 import hello.shop.Entity.Member.Member;
+import hello.shop.Entity.Order.Order;
+import hello.shop.Entity.Order.OrderSearch;
 import hello.shop.Sevice.Member.MemberService;
+import hello.shop.Sevice.Order.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -12,8 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -22,6 +27,7 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
+    private final OrderService orderService;
 
     @GetMapping("/members/new")
     public String createForm(Model model) {
@@ -56,12 +62,24 @@ public class MemberController {
     }
 
     @GetMapping("/members/my-page")
-    public String myPage(Model model, HttpServletRequest request) {
+    public String myPage(Model model, HttpServletRequest request,
+                         @ModelAttribute("orderSearch")OrderSearch orderSearch) {
         HttpSession session = request.getSession(false);
 
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        log.info("MyPage Member = {}", member.getUsername());
+        List<Order> orders = orderService.findOrders(orderSearch);
+        List<Order> memberOrders = new ArrayList<>();
+        int totalPrice = 0;
 
+        for(Order order : orders) {
+            totalPrice += order.getTotalPrice();
+            if(order.getMember().getUsername().equals(member.getUsername())) {
+                memberOrders.add(order);
+            }
+        }
+
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("orders", memberOrders);
         model.addAttribute("member", member);
 
         return "members/memberPage";
