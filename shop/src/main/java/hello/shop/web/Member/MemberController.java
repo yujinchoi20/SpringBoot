@@ -4,6 +4,7 @@ import hello.shop.Entity.Member.Address;
 import hello.shop.Entity.Member.Member;
 import hello.shop.Entity.Order.Order;
 import hello.shop.Entity.Order.OrderSearch;
+import hello.shop.Entity.Order.OrderStatus;
 import hello.shop.Sevice.Member.MemberService;
 import hello.shop.Sevice.Order.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -72,7 +73,10 @@ public class MemberController {
         int totalPrice = 0;
 
         for(Order order : orders) {
-            totalPrice += order.getTotalPrice();
+            //취소 주문건은 총 주문 가격에 포함하지 않음
+            if(order.getStatus().equals(OrderStatus.ORDER)) {
+                totalPrice += order.getTotalPrice();
+            }
             if(order.getMember().getUsername().equals(member.getUsername())) {
                 memberOrders.add(order);
             }

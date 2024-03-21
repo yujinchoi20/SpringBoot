@@ -48,8 +48,10 @@
       </tbody>
     </table>
 
-    <h3>총 주문 가격</h3>
-    <h4 th:text="${totalPrice}"></h4>
+    <table class="table table-striped">
+      <h3>총 주문 가격</h3>
+      <h4 th:text="${totalPrice}"></h4>
+    </table>
   </div>
   <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->

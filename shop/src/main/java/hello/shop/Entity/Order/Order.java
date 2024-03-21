@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class Order {
     @JoinColumn(name = "delivery_id") //order-delivery 연관관계에서는 order가 주인
     private Delivery delivery;
 
-    private LocalDateTime orderDate; //주문 시간
+    private LocalDate orderDate; //주문 시간
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status; //주문 상태 (ORDER, CANCEL)
@@ -69,7 +70,7 @@ public class Order {
         }
 
         order.setStatus(OrderStatus.ORDER);
-        order.setOrderDate(LocalDateTime.now());
+        order.setOrderDate(LocalDate.now());
 
         return order;
     }
@@ -93,7 +94,7 @@ public class Order {
 
     /*
         조회 로직
-        전체 주문 가격 조회: 회원 한 명의 전체 주문 가격 조회
+        전체 주문 가격 조회
      */
     public int getTotalPrice() {
         int totalPrice = 0;
