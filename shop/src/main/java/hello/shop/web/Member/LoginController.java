@@ -28,8 +28,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid LoginForm form, BindingResult result,
-                        HttpServletRequest request) {
+    public String login(@Valid LoginForm form,
+                        BindingResult result,
+                        HttpServletRequest request,
+                        Model model) {
         if(result.hasErrors()) {
             return "members/memberLogin";
         }
@@ -41,8 +43,10 @@ public class LoginController {
             return "members/memberLogin";
         }
         if(!member.getPassword().equals(form.getPassword())) { //비밀번호가 틀리다면
-            result.reject("비밀번호가 일치하지 않습니다.");
-            return "members/memberLogin";
+            //result.reject("비밀번호가 일치하지 않습니다.");
+            model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
+            model.addAttribute("searchUrl", "/login");
+            return "message";
         }
 
         HttpSession session = request.getSession();
