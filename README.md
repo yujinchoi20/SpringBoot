@@ -61,7 +61,7 @@ __컬렉션은 필드에서 초기화__
 * 예시) private List<Item> items = new ArrayList<>(); //즉시 초기화 함
 * null 값을 방지하기 위해 바로 초기화함
 
-![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/882d6813-da2b-4155-bafe-ac601d1cd074)
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/d09b2a66-b3e4-48a3-bb18-24321b90c805)
 
 https://www.erdcloud.com/d/PwNZ7b9zzwQKXfHyg
 
