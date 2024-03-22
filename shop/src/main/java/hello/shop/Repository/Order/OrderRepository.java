@@ -20,6 +20,8 @@ public class OrderRepository {
     /**
      * save: 상품 주문
      * findOne: 주문 내역 조회
+     * findByMember: 회원 주문 내역 조회
+     * findAllByCriteria: 회원, 주문 상태로 주문 내역 조회
      */
 
     private final EntityManager em;

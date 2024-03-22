@@ -7,6 +7,7 @@ import hello.shop.Entity.Order.OrderSearch;
 import hello.shop.Entity.Order.OrderStatus;
 import hello.shop.Sevice.Member.MemberService;
 import hello.shop.Sevice.Order.OrderService;
+import hello.shop.web.Session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -73,12 +74,11 @@ public class MemberController {
         int totalPrice = 0;
 
         for(Order order : orders) {
-            //취소 주문건은 총 주문 가격에 포함하지 않음
-            if(order.getStatus().equals(OrderStatus.ORDER)) {
-                totalPrice += order.getTotalPrice();
-            }
-            if(order.getMember().getUsername().equals(member.getUsername())) {
+            //취소 주문건은 총 주문 가격에 포함하지 않음, 자신의 주문건만 보여줌
+            if(order.getStatus().equals(OrderStatus.ORDER) &&
+                    order.getMember().getUsername().equals(member.getUsername())) {
                 memberOrders.add(order);
+                totalPrice += order.getTotalPrice();
             }
         }
 
