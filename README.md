@@ -160,8 +160,9 @@ __Entity, Repository, Service 란?__
 3. Spring 서버 여러 개를 실행하여 부하 테스트 진행 - nGrinder 성능 테스트 툴 사용 예정
 4. 데이터베이스 변경: H2 DB -> MariaDB ✔️
 5. 연관관계가 맺어진 객체를 대상으로 쿼리문 실행 횟수를 확인하여 필요 이상의 쿼리문이 실행되는지 확인해보기 -> 지연 로딩 적용 ✔️
-6. 관리자 계정 만들기
+6. 관리자 계정 만들기 ✔️
 7. Spring Security 적용하기(인증기능) + JWT
+8. 페이지 세부적으로 나누기, 페이지 안정화화
 
 --------------------------------
 
@@ -243,3 +244,27 @@ __03/21/2024__
 
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/953c8c44-adba-46aa-811d-ac0e83de2f9a)
 
+__03/22/2024__
+* 관리자 모드 추가
+  * 관리자 테이블 생성: Admin(Entity), AdminRepository, AdminService, AdminController, AdminLoginForm, LoginForm(/admin/login, /admin/logout)
+  * 관리자 모드 기능: 회원 목록 조회, 상품 등록, 상품 수정, 회원 주문 내역 조회
+  * 일반 회원 모드 기능: 마이페이지(회원 정보, 회원 주문 내역, 주문 총 가격), 상품 목록 조회, 상품 주문, 주문 내역 조회(본인것만)
+  * 비회원 모드 기능: 회원 가입, 로그인(일반 회원 로그인, 관리자 로그인), 상품 목록 조회
+
+* 마이페이지의 주문 내역과 총 가격 수정 -> 기존에는 다른 회원 주문 가격까지 더해지고 있었음
+* 상품 주문 기능에서 회원을 선택하는 것이 아니라 로그인 된 회원으로 주문하도록 수정
+* 주문 내역 조회 기능에서 본인의 주문 내역만 조회할 수 있도록 수정
+
+#### 진행중인 개발 사항
+* 뷰 화면 수정중 -> 로그인 모드 분리에 따라 뷰 화면 수정이 불가피함, 추가적으로 개선할 예정
+* 일반 회원 모드에서 상품 수정을 불가능하도록 수정해야됨
+* bodyheader.html -> 일반 회원 모드와 관리자 모드에 따라 home 화면을 다르게 처리해야됨
+
+* 비회원 모드
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/77f6101e-3dea-40b6-b370-801804bd205e)
+
+* 일반 회원 모드
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/6f1353d7-e6ce-43bd-88d6-e23a200a0f3b)
+
+* 관리자 모드
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/58980994-8d08-41df-a91e-1c7eb38ac976)
