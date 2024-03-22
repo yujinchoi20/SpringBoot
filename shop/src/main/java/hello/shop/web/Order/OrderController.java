@@ -84,6 +84,22 @@ public class OrderController {
         return "order/orderList";
     }
 
+    @GetMapping("/admin/orders")
+    public String adminOrderList(@ModelAttribute("orderSearch") OrderSearch orderSearch,
+                            HttpServletRequest request,
+                            Model model) {
+        HttpSession session = request.getSession(false);
+        if(session == null) {
+            model.addAttribute("message", "로그인이 필요합니다.");
+            model.addAttribute("searchUrl", "/login");
+        }
+
+        List<Order> orders = orderService.findOrders(orderSearch);
+        model.addAttribute("orders", orders);
+
+        return "order/orderList";
+    }
+
     @PostMapping("/orders/{orderId}/cancel")
     public String cancelOrder(@PathVariable("orderId") Long orderId) {
         orderService.cancelOrder(orderId);

@@ -106,6 +106,15 @@ public class ItemController {
         return "items/itemList";
     }
 
+    @GetMapping("/admin/items")
+    public String adminItemList(@ModelAttribute("itemSearch") ItemSearch itemSearch, Model model) {
+        //log.info("Type = {}", itemSearch.getItemType());
+        List<Item> items = itemService.findType(itemSearch.getItemType());
+
+        model.addAttribute("items", items);
+        return "items/adminItemList";
+    }
+
     @GetMapping("/items/{itemId}/edit")
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
         Item editItem = itemService.findOne(itemId);
