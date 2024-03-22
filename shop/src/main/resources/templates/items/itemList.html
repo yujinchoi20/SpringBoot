@@ -9,7 +9,7 @@
   <div>
     <form th:object="${itemSearch}" class="form-inline" >
       <div class="form-group mx-sm-1 mb-2">
-        <select th:field="*{itemType}" class=ite"form-control" >
+        <select th:field="*{itemType}" class="form-control" >
           <option value="">상품 종류</option>
           <option th:each="type : ${T(hello.shop.Entity.Item.ItemType).values()}"
                   th:value="${type}"
