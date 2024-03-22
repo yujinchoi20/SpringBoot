@@ -35,6 +35,7 @@ __도메인(Entity) 목록__
 * 상품(Item), 상속 -> 도서(Book), 음반(Album), 영화(Movie)
 * 카테고리(Category)
 * 카테고리_상품(CategoryItem)
+* 관리자(Admin)
 
 
 __임베디드 타입__
@@ -44,6 +45,7 @@ __임베디드 타입__
 __EnumType__
 * 주문 상태(Order Status) - ORDER, CANCEL
 * 배송 상태(Delivery Status) - READY, COMP
+* 아이템 타입(Item type) - Book, Album, Movie
 * EnumType은 꼭 String으로 설정, 기본 설정 값으로 두면 index로 Enum 값을 사용하기 때문에 Enum 값 추가시 혼란이 생길 수 있음.
 
 
@@ -69,18 +71,45 @@ https://www.erdcloud.com/d/PwNZ7b9zzwQKXfHyg
 
 ### 2. 구현 요구 사항
 
-* 회원 기능
-  * 회원 등록
-  * 회원 조회
-* 상품 기능
-  * 상품 등록
-  * 상품 수정
-  * 상품 조회
-* 주문 기능
-  * 상품 주문
-  * 주문 내역 조회
-  * 주문 취소
+* 관리자 모드
+   * 회원 기능
+     * 회원 목록
+   * 상품 기능
+     * 상품 등록
+     * 상품 목록
+   * 주문 기능
+     * 주문 내역
+       
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/6675acc9-c3dc-40fc-80a2-ae381e6ed4f3)
 
+
+* 회원 모드
+  * 회원 기능
+    * 마이페이지
+  * 상품 기능
+    * 상품 목록
+  * 주문 기능
+    * 상품 주문
+    * 주문 내역
+      
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/77d67564-3c6b-411a-83ae-f535e111830e)
+
+
+* 비회원 모드(혹은 로그아웃 모드)
+  * 로그인 기능
+    * 로그인
+    * 관리자 로그인
+  * 회원 기능
+    * 회원 가입
+  * 상품 기능
+    * 상품 목록
+      
+![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/be2dfba3-97e5-477b-8062-698b8e161a58)
+
+
+
+* 기존 기능
+  
 ![image](https://github.com/yujinchoi20/SpringMVC-and-JPA/assets/105353163/0cf66e48-6e18-46b4-a4b2-b6ac9935d900)
 
 __Entity, Repository, Service 란?__
@@ -110,6 +139,11 @@ __Entity, Repository, Service 란?__
       * 조회 로직: getTotalPrice
    * Repository: 상품 주문(save), 주문 내역 조회(findOne)
    * Service: 상품 주문(order), 주문 취소(cancelOrder)
+4) 관리자 모드(Admin)
+   * Entity: 관리자 아이디(admin_id), 관리자 이름(name), 관리자 로그인 아이디(adminUserId), 관리자 비밀번호(password)
+   * Repository: 관리자 등록(save), 관리자 조회(findOne, findById)
+   * Service: 관리자 등록(join), 관리자 조회(findAdmin, findById)
+
 
 ### 3. 웹 계층 개발
 
@@ -117,6 +151,7 @@ __Entity, Repository, Service 란?__
 * 회원 기능 (MemberController, MemberForm)
   * 회원 등록
   * 회원 조회
+  * 마이페이지
 * 상품 기능 (ItemController, BookForm)
   * 상품 등록
   * 상품 조회
@@ -125,7 +160,8 @@ __Entity, Repository, Service 란?__
   * 상품 주문
   * 주문 내역 조회
   * 주문 취소
-
+* 관리자 모드(AdminController)
+  
 
 #### __Spring MVC 패턴__
 
