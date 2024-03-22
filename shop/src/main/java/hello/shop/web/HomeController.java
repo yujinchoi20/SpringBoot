@@ -31,7 +31,7 @@ public class HomeController {
         model.addAttribute("member", loginMember);
         log.info("username={}", loginMember.getUsername());
 
-        return "loginHome";
+        return "members/loginHome";
     }
 
     @GetMapping("/admin")
@@ -50,6 +50,6 @@ public class HomeController {
         model.addAttribute("admin", loginAdmin);
         log.info("admin = {}", loginAdmin.getName());
 
-        return "adminHome";
+        return "admin/adminHome";
     }
 }

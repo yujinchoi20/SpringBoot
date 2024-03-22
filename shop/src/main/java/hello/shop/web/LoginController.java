@@ -78,7 +78,7 @@ public class LoginController {
     @GetMapping("/admin/login")
     public String adminLoginForm(Model model) {
         model.addAttribute("adminLoginForm", new AdminLoginForm());
-        return "members/adminLogin";
+        return "admin/adminLogin";
     }
 
     @PostMapping("/admin/login")
@@ -95,7 +95,7 @@ public class LoginController {
 
         if (admin == null) { //아이디가 존재하지 않는다면
             result.reject("해당 아이디와 일치하는 회원이 없습니다.");
-            return "members/adminLogin";
+            return "admin/adminLogin";
         }
         if (!admin.getPassword().equals(form.getPassword())) { //비밀번호가 틀리다면
             model.addAttribute("message", "비밀번호가 일치하지 않습니다.");

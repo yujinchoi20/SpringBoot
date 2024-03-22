@@ -112,7 +112,7 @@ public class ItemController {
         List<Item> items = itemService.findType(itemSearch.getItemType());
 
         model.addAttribute("items", items);
-        return "items/adminItemList";
+        return "admin/adminItemList";
     }
 
     @GetMapping("/items/{itemId}/edit")
