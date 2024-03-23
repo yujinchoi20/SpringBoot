@@ -21,7 +21,7 @@ public class AdminRepository {
         return admin.getId();
     }
 
-    public Admin findOnd(Long id) {
+    public Admin findOne(Long id) {
         return em.find(Admin.class, id);
     }
 

@@ -25,7 +25,7 @@ public class AdminService {
     }
 
     public Admin findAdmin(Long id) {
-        return adminRepository.findOnd(id);
+        return adminRepository.findOne(id);
     }
 
     public Admin findById(String adminId) {

@@ -87,7 +87,7 @@ public class LoginController {
                              HttpServletRequest request,
                              Model model) {
         if(result.hasErrors()) {
-            return "members/adminLogin";
+            return "admin/adminLogin";
         }
 
         //아이디 잘못 입력시 바로 예외가 터져버리기 때문에 수정할 필요가 있음
