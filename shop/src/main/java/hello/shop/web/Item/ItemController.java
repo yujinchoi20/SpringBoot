@@ -58,7 +58,7 @@ public class ItemController {
         //log.info("Book = {}, {}, {}, {}, {}", form.getAuthor(), form.getIsbn(), form.getName(), form.getPrice(), form.getStockQuantity());
         itemService.saveItem(book);
 
-        return "redirect:/items";
+        return "redirect:/admin/items";
     }
 
     //Album 아이템 추가
@@ -76,7 +76,7 @@ public class ItemController {
         //log.info("Album = {}, {}, {}, {}, {}", form.getArtist(), form.getEtc(), form.getName(), form.getPrice(), form.getStockQuantity());
         itemService.saveItem(album);
 
-        return "redirect:/items";
+        return "redirect:/admin/items";
     }
 
     //movie 아이템 추가
@@ -94,7 +94,7 @@ public class ItemController {
         //log.info("Movie = {}, {}, {}, {}, {}", form.getActor(), form.getDirector(), form.getName(), form.getPrice(), form.getStockQuantity());
         itemService.saveItem(movie);
 
-        return "redirect:/items";
+        return "redirect:/admin/items";
     }
 
     @GetMapping("/items")
